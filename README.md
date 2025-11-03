@@ -11,7 +11,7 @@ Component	Role
 * MapReduce -	Processes the data in parallel (Map = divide work, Reduce = combine results).
 * YARN	- Manages and schedules tasks across the cluster.
 
-## Historical context and evolution. explain it in detail with understandable examples
+## Historical context and evolution. 
 #### Before Hadoop:
 * Companies stored data in relational databases (RDBMS).
 * These worked fine for small or structured data.
