@@ -56,24 +56,24 @@ Feature	Explanation
   
 ### Comparison with Hadoop MapReduce.
 ### Feature	                  Hadoop MapReduce	                             Apache Spark
-* Processing           ----> Type	Batch (step-by-step, disk-based)	-----> Batch + Real-time (in-memory)
+* Processing           ----> Type	Batch (step-by-step, disk-based)	----> Batch + Real-time (in-memory)
 * Speed	Slower         –---> writes to disk after every operation   –--->	10–100x faster – keeps data in RAM
-* Ease of Use	Complex  –--->Java programs	                          –--->Simple APIs (Python, Scala, Java, R)
-* Data Storage         –--->	Always disk-based (HDFS)	            –--->Mostly in-memory, but can use HDFS too
-* Machine Learning	   –--->External libraries needed	              –--->Built-in MLlib
-* Best For             –--->Large-scale batch processing	          –--->Real-time analytics, ML, and iterative tasks
+* Ease of Use	Complex  –---> Java programs	                        –---> Simple APIs (Python, Scala, Java, R)
+* Data Storage         –---> Always disk-based (HDFS)	              –---> Mostly in-memory, but can use HDFS too
+* Machine Learning	   –---> External libraries needed	            –---> Built-in MLlib
+* Best For             –---> Large-scale batch processing	          –---> Real-time analytics, ML, and iterative tasks
 
 ## Spark Architecture Overview: 
 ### Understanding the key components of the Spark architecture. 
 When you run a Spark application, it’s not just one program running — it’s a cluster-based system with several parts working together.
 
 #### Component	Role
-* Driver Program	---->   Controls the Spark application, plans tasks.
-* SparkContext	---->   Connects Driver to Cluster Manager.
-* Cluster Manager	---->   Allocates resources to the application.
-* Worker Node	---->   Executes the work assigned by the driver.
-* Executor	---->   Runs tasks and stores data.
-* Task	---->     The smallest execution unit.
+* Driver Program	   ---->   Controls the Spark application, plans tasks.
+* SparkContext	     ---->   Connects Driver to Cluster Manager.
+* Cluster Manager	   ---->   Allocates resources to the application.
+* Worker Node	       ---->   Executes the work assigned by the driver.
+* Executor	         ---->   Runs tasks and stores data.
+* Task	             ---->   The smallest execution unit.
 
 ### Interaction between components during the execution of Spark applications. 
 ### Step 1: SparkContext Initialization
