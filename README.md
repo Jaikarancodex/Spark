@@ -222,6 +222,88 @@ Each abstraction can be converted depending on whether you need **performance**,
 | **Dataset → DataFrame** | To use SQL functions or flexible schema operations. |
 | **RDD → Dataset** | To combine distributed data with strong typing. |
 
+---
+
+## 💥 Narrow and Wide Transformations in Apache Spark
+
+Transformations in Spark define **how data is modified** in RDDs or DataFrames.  
+They are *lazy operations* — meaning they do not execute immediately, but build a logical plan of computation that runs only when an action (like `count` or `collect`) is called.
+
+---
+
+### **1️ Transformations in Spark**
+Transformations are operations that **create a new RDD or DataFrame** from an existing one.  
+They describe *what to do* with data (e.g., filtering, mapping, grouping) but do not actually perform the computation until an action is triggered.
+
+**Examples of transformations:**  
+`map()`, `filter()`, `groupByKey()`, `reduceByKey()`, `join()`, etc.
+
+---
+
+###  **2️ Narrow Transformations**
+Narrow transformations are those where **each input partition contributes to only one output partition**.  
+There is **no data movement (no shuffling)** across the cluster.
+
+**Characteristics:**
+- Fast and efficient.
+- No need for data redistribution between nodes.
+- Easy to execute in parallel.
+
+**Examples:**
+- `map()` → transforms each element independently.
+- `filter()` → keeps elements that satisfy a condition.
+- `union()` → merges RDDs without re-partitioning.
+
+**Conceptually:**  
+Each partition in the source RDD maps directly to a partition in the target RDD.
+
+---
+
+###  **3️ Wide Transformations**
+Wide transformations are those where **data from multiple partitions must be shuffled across the cluster**.  
+They require Spark to **redistribute data** based on keys or grouping, which can be time-consuming.
+
+**Characteristics:**
+- Involves **data shuffling** between nodes.
+- Triggers the creation of new **stages** in the DAG.
+- Slower compared to narrow transformations due to network I/O.
+
+**Examples:**
+- `groupByKey()` → groups elements by key, requiring all matching keys to move to the same partition.
+- `reduceByKey()` → combines values with the same key across partitions.
+- `join()` → brings together matching keys from two RDDs, requiring data shuffle.
+
+---
+
+###  **4️ Understanding Shuffling in Spark**
+**Shuffling** is the process of **redistributing data** across different partitions and nodes in the cluster.  
+It happens during wide transformations when data with the same key needs to be collected together.
+
+**Key Points:**
+- Involves **reading and writing to disk** and **network transfer**.
+- Expensive operation that impacts performance.
+- Spark automatically tries to minimize shuffles using optimizations like **map-side combine**.
+
+---
+
+### **Examples Summary**
+
+|  **Type** |  **Description** |  **Example Operations** |
+|--------------|--------------------|---------------------------|
+|  **Narrow Transformation** | Data from one partition goes to a single partition in output (no shuffle). | `map()`, `flatMap()`, `filter()`, `union()` |
+|  **Wide Transformation** | Data from multiple partitions is shuffled across the cluster. | `groupByKey()`, `reduceByKey()`, `join()`, `distinct()` |
+
+---
+
+###  **Key Takeaways**
+- **Narrow transformations** → No shuffle, fast execution.  
+- **Wide transformations** → Involve shuffle, slower execution.  
+- **Shuffling** → Data movement between partitions; can affect performance.  
+- Spark automatically builds a **DAG (Directed Acyclic Graph)** based on narrow and wide transformations to optimize task execution.
+
+---
+
+
 
 
 
